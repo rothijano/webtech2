@@ -1,0 +1,53 @@
+<h1 class="mat-h1">Termék létrehozása Form</h1>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="standard">
+        <mat-label>Név</mat-label>
+        <input matInput type="text" formControlName="name" required>
+        <mat-error *ngIf="f.name.touched && f.name.invalid">
+            <span *ngIf="f.name.errors?.required">A mező kitöltése kötelező.</span>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Leírás</mat-label>
+        <textarea matInput maxlength="250" formControlName="description"></textarea>
+        <mat-error *ngIf="f.description.touched && f.description.invalid">
+            <span *ngIf="f.description.errors?.maxlength">Maximum 250 karakter hosszú leírást adhat meg.</span>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Darabszám</mat-label>
+        <input autocomplete="off" matInput type="number" formControlName="quantity" required min="0">
+        <mat-error *ngIf="f.quantity.touched && f.quantity.invalid">
+            <span *ngIf="f.quantity.errors?.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="f.quantity.errors?.min">A darabszámnak minimum 0 val vagy nagyobb számmal kell kezdődnie</span>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Ár</mat-label>
+        <input matInput type="number" formControlName="price" required min="0">
+        <mat-error *ngIf="f.price.touched && f.price.invalid">
+            <span *ngIf="f.price.errors?.required">A mező kitöltése kötelező.</span>
+            <span *ngIf="f.price.errors?.min">Minimum 0 vagy magasabb számmal kell kezdődnie az értéknek.</span>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Állapot</mat-label>
+        <mat-select formControlName="isActive">
+            <mat-option *ngFor="let status of activeStatus" [value]="status.value">
+                {{status.viewValue}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.isActive.touched && f.isActive.invalid">
+            <span *ngIf="f.isActive.errors?.required">A mező kitöltése kötelező.</span>
+        </mat-error>
+    </mat-form-field>
+
+    <div class="footer">
+        <button mat-stroked-button color="primary" type="button" (click)="back()">Vissza</button>
+        <button mat-raised-button color="primary" type="submit">Létrehozás</button>
+    </div>
+</form>

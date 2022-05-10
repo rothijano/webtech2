@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="row">
+        <span class="title">Webtech2 Beadandó</span>
+        <div>
+            <button mat-button routerLink="/">
+                Főoldal
+            </button>
+            <ng-container *ngIf="authService.currentUser$ | async; then loggedIn else loggedOut">
+            </ng-container>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<ng-template #loggedOut>
+    <button mat-icon-button [matMenuTriggerFor]="loggedInMenu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #loggedInMenu="matMenu">
+        <button mat-menu-item routerLink="/login">
+            Bejelentkezés
+        </button>
+        <button mat-menu-item routerLink="/register">
+            Regisztráció
+        </button>
+    </mat-menu>
+</ng-template>
+
+<ng-template #loggedIn>
+    <button mat-button routerLink="/products">
+        Termékek
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="loggedInMenu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    
+    <mat-menu #loggedInMenu="matMenu">
+        <span class="user-info">
+            Bejelentkezve mint <b>{{(authService.currentUser$ | async)?.username}}</b>
+        </span>
+        <button mat-menu-item (click)="logout()">
+            Kijelentkezés
+        </button>
+    </mat-menu>
+</ng-template>
